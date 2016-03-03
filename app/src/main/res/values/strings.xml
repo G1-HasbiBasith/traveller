@@ -13,4 +13,5 @@
         <item>发文</item>
         <item>我的</item>
     </string-array>
+    <string name="title_activity_spot_detail">SpotDetailActivity</string>
 </resources>

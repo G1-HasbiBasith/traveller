@@ -14,7 +14,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        HttpManager.cancelAll(this);
+        //HttpManager.cancelAll(this);
     }
 
     protected void executeRequest(Request request) {
