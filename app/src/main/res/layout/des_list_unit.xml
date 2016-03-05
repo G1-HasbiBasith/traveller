@@ -16,5 +16,7 @@
     <ImageView
         android:id="@+id/spot_img"
         android:layout_width="fill_parent"
-        android:layout_height="180dp" />
+        android:layout_height="180dp"
+        android:visibility="gone"
+        />
 </LinearLayout>

@@ -3,7 +3,7 @@
     package="com.sigaritus.swu.travel" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:name=".TravelApp"
         android:allowBackup="true"
@@ -23,7 +23,11 @@
         <activity
             android:name=".ui.activity.SpotDetailActivity"
             android:label="@string/title_activity_spot_detail"
+            android:parentActivityName=".ui.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity" />
         </activity>
     </application>
 

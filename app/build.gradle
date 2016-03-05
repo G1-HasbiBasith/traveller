@@ -24,10 +24,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.mcxiaoke.volley:library:1.0.18'
-
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
 
 }

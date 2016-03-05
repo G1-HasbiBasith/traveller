@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sigaritus.swu.travel.ui.views;
+package com.sigaritus.swu.travel.ui.views.pinnedList;
 
 import android.content.Context;
 import android.database.DataSetObserver;
