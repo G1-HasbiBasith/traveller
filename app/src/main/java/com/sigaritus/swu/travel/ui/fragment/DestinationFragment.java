@@ -83,7 +83,7 @@ public class DestinationFragment extends BaseFragment implements View.OnClickLis
             mSlider.addSlider(textSliderView);
         }
 
-        mSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mSlider.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mSlider.setCustomAnimation(new DescriptionAnimation());
         mSlider.setDuration(4000);
