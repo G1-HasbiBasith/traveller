@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#329EAC</color>
     <color name="colorAccent">#19C1AC</color>
     <color name="background">#F9EDBD</color>
+    <color name="logbackground">#f3f3f3</color>
 </resources>

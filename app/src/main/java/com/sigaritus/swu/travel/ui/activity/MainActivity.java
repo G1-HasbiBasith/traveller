@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTabHost.addTab(fragmentTabHost.newTabSpec(tabs[i]).setIndicator(getTabview(i)),
                     fragments[i],null);
         }
-
+        
 
 
     }
