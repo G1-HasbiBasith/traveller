@@ -11,6 +11,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
+import com.avos.avoscloud.AVUser;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.util.ToastUtils;
 
@@ -24,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(view);
 
         //渐变展示启动屏
-        AlphaAnimation aa = new AlphaAnimation(0.5f,0.8f);
+        AlphaAnimation aa = new AlphaAnimation(0.5f, 0.8f);
         aa.setDuration(2000);
         view.startAnimation(aa);
         aa.setAnimationListener(new Animation.AnimationListener() {
@@ -46,9 +47,16 @@ public class SplashActivity extends AppCompatActivity {
 
     //重定向至登录页面
     private void redirectTo() {
-        Intent intent = new Intent(this, LoginActivity.class);
 
-        startActivity(intent);
+        AVUser currentUser = AVUser.getCurrentUser();
+
+        if (currentUser != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
 
         finish();
 
