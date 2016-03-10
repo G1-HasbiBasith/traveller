@@ -3,6 +3,13 @@
     <color name="colorPrimary">#4DBCCB</color>
     <color name="colorPrimaryDark">#329EAC</color>
     <color name="colorAccent">#19C1AC</color>
-    <color name="background">#F9EDBD</color>
+    <!--<color name="background">#F9EDBD</color>-->
     <color name="logbackground">#f3f3f3</color>
+
+    <!-- settingview-->
+    <color name="setting_view_item_bg_pressed">#FFF0F0F0</color>
+    <color name="setting_view_item_bg_normal">#FFFFFFFF</color>
+
+    <color name="setting_view_item_title_text">#FF000000</color>
+    <color name="setting_view_item_subtitle_text">#FFCCCCCC</color>
 </resources>
