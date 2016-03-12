@@ -29,4 +29,6 @@
     <string name="permission_rationale">
     </string>
     <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="logout">退出</string>
 </resources>

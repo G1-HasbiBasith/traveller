@@ -98,7 +98,7 @@ public class SettingView extends LinearLayout {
 		if (iOSStyleable) {
 			int paddingLeft = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.setting_view_min_height), getResources().getDisplayMetrics())
 					+ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.setting_view_lr_padding), getResources().getDisplayMetrics());
-			divider.setPadding(paddingLeft, 0, 0, 0);
+			divider.setPadding(paddingLeft, 0, 0,0);
 		}
 
 		addView(divider, lps);

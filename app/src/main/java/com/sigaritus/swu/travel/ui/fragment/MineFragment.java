@@ -7,22 +7,30 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.avos.avoscloud.AVUser;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.ui.views.settings.SettingView;
 import com.sigaritus.swu.travel.ui.views.settings.entity.SettingData;
 import com.sigaritus.swu.travel.ui.views.settings.entity.SettingViewItemData;
 import com.sigaritus.swu.travel.ui.views.settings.item.BasicItemViewH;
+import com.sigaritus.swu.travel.util.ToastUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MineFragment extends BaseFragment {
     private SettingView mSettingView = null;
-
+    private Button logout= null;
+    private TextView username= null;
     private SettingData mItemData = null;
     private SettingViewItemData mItemViewData = null;
     private List<SettingViewItemData> mListData = new ArrayList<SettingViewItemData>();
+
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
         return fragment;
@@ -31,7 +39,6 @@ public class MineFragment extends BaseFragment {
     public MineFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -45,11 +52,32 @@ public class MineFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        AVUser currentUser = AVUser.getCurrentUser();
+
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
 
-        mSettingView = (SettingView)view.findViewById(R.id.main_setting_view);
+        mSettingView = (SettingView) view.findViewById(R.id.main_setting_view);
+
+        username = (TextView)view.findViewById(R.id.username);
+
+        username.setText(currentUser.getUsername());
+
+        logout = (Button)view.findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AVUser.logOut();             //清除缓存用户对象
+                ToastUtils.showShort("已注销用户");
+            }
+        });
+
+
 
         initViews();
+
+
 
         mSettingView.setOnSettingViewItemClickListener(new SettingView.onSettingViewItemClickListener() {
 
@@ -76,6 +104,7 @@ public class MineFragment extends BaseFragment {
         mItemViewData = new SettingViewItemData();
         mItemData = new SettingData();
         mItemData.setTitle("消息");
+        mItemData.setDrawable(getActivity().getResources().getDrawable(R.drawable.ic_email_black_36dp));
 
         mItemViewData.setData(mItemData);
         mItemViewData.setItemView(new BasicItemViewH(getActivity()));
@@ -84,6 +113,17 @@ public class MineFragment extends BaseFragment {
         mItemViewData = new SettingViewItemData();
         mItemData = new SettingData();
         mItemData.setTitle("足迹");
+        mItemData.setDrawable(getActivity().getResources().getDrawable(R.drawable.ic_bookmark_border_black_36dp));
+
+        mItemViewData.setData(mItemData);
+        mItemViewData.setItemView(new BasicItemViewH(getActivity()));
+        mListData.add(mItemViewData);
+
+        mItemViewData = new SettingViewItemData();
+        mItemData = new SettingData();
+        mItemData.setTitle("游记");
+        mItemData.setDrawable(getActivity().getResources().getDrawable(R.drawable.ic_description_black_36dp));
+
 
         mItemViewData.setData(mItemData);
         mItemViewData.setItemView(new BasicItemViewH(getActivity()));
@@ -92,11 +132,31 @@ public class MineFragment extends BaseFragment {
         mItemViewData = new SettingViewItemData();
         mItemData = new SettingData();
         mItemData.setTitle("收藏");
+        mItemData.setDrawable(getActivity().getResources().getDrawable(R.drawable.ic_grade_black_36dp));
 
         mItemViewData.setData(mItemData);
         mItemViewData.setItemView(new BasicItemViewH(getActivity()));
         mListData.add(mItemViewData);
 
+        mItemViewData = new SettingViewItemData();
+        mItemData = new SettingData();
+        mItemData.setTitle("分享");
+        mItemData.setDrawable(getActivity().getResources().getDrawable(R.drawable.ic_share_black_36dp));
+
+
+        mItemViewData.setData(mItemData);
+        mItemViewData.setItemView(new BasicItemViewH(getActivity()));
+        mListData.add(mItemViewData);
+
+        mItemViewData = new SettingViewItemData();
+        mItemData = new SettingData();
+        mItemData.setTitle("设置");
+        mItemData.setDrawable(getActivity().getResources().getDrawable(R.drawable.ic_dashboard_white_36dp));
+
+
+        mItemViewData.setData(mItemData);
+        mItemViewData.setItemView(new BasicItemViewH(getActivity()));
+        mListData.add(mItemViewData);
         mSettingView.setAdapter(mListData);
     }
 
@@ -112,7 +172,6 @@ public class MineFragment extends BaseFragment {
         super.onDetach();
 
     }
-
 
 
 }

@@ -19,13 +19,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="一句话介绍自己" />
+        android:id="@+id/username"
+         />
 
     <com.sigaritus.swu.travel.ui.views.settings.SettingView
         android:id="@+id/main_setting_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         app:iOSStyle="false" />
 
+    <Button
+        android:id="@+id/logout"
+        style="?android:textAppearanceSmall"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/logout"
+        android:background="#cbfcfcfc"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 </LinearLayout>
