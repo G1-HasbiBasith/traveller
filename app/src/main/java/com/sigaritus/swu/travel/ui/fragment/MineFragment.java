@@ -28,7 +28,6 @@ public class MineFragment extends BaseFragment {
     private Button logout= null;
     private TextView username= null;
     private SettingData mItemData = null;
-    private SettingViewItemData mItemViewData = null;
     private List<SettingViewItemData> mListData = new ArrayList<SettingViewItemData>();
 
     public static MineFragment newInstance() {
@@ -55,6 +54,7 @@ public class MineFragment extends BaseFragment {
         AVUser currentUser = AVUser.getCurrentUser();
 
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
+
 
         mSettingView = (SettingView) view.findViewById(R.id.main_setting_view);
 
@@ -101,7 +101,7 @@ public class MineFragment extends BaseFragment {
     }
 
     private void initViews() {
-        mItemViewData = new SettingViewItemData();
+        SettingViewItemData mItemViewData = new SettingViewItemData();
         mItemData = new SettingData();
         mItemData.setTitle("消息");
         mItemData.setDrawable(getActivity().getResources().getDrawable(R.drawable.ic_email_black_36dp));
@@ -157,7 +157,10 @@ public class MineFragment extends BaseFragment {
         mItemViewData.setData(mItemData);
         mItemViewData.setItemView(new BasicItemViewH(getActivity()));
         mListData.add(mItemViewData);
+
         mSettingView.setAdapter(mListData);
+
+        mListData =new ArrayList<SettingViewItemData>();
     }
 
 

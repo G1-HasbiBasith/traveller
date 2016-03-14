@@ -21,8 +21,8 @@ import com.sigaritus.swu.travel.util.ToastUtils;
 
 import java.util.HashMap;
 
-public class DestinationFragment extends BaseFragment implements View.OnClickListener, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
-    private SliderLayout mSlider;
+public class DestinationFragment extends BaseFragment implements View.OnClickListener {
+
     @Override
     public void onClick(View view) {
         ToastUtils.showShort("item"+view.getTag());
@@ -51,45 +51,14 @@ public class DestinationFragment extends BaseFragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_destination, container, false);
         ListView list = (ListView)view.findViewById(R.id.destination_list);
-        mSlider = (SliderLayout)view.findViewById(R.id.slider);
 
-        initializeSlider(mSlider);
 
         initializeAdapter(list);
         initializePadding(list);
         return view;
     }
 
-    private void initializeSlider(SliderLayout mSlider) {
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("slider1",R.drawable.slider1);
-        file_maps.put("slider2",R.drawable.slider2);
-        file_maps.put("slider3",R.drawable.slider3);
-        file_maps.put("slider4", R.drawable.slider4);
-        for(String name : file_maps.keySet()){
-            TextSliderView textSliderView = new TextSliderView(getActivity());
-            // initialize a SliderLayout
-            textSliderView
-                    .description(name)
-                    .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
 
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra",name);
-
-            mSlider.addSlider(textSliderView);
-        }
-
-        mSlider.setPresetTransformer(SliderLayout.Transformer.DepthPage);
-        mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mSlider.setCustomAnimation(new DescriptionAnimation());
-        mSlider.setDuration(4000);
-        mSlider.addOnPageChangeListener( this);
-
-    }
 
 
     private boolean hasHeaderAndFooter;
@@ -132,28 +101,10 @@ public class DestinationFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onStop() {
-        mSlider.stopAutoCycle();
+
         super.onStop();
 
     }
 
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
 
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 }

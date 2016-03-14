@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -98,7 +99,7 @@ public class SettingView extends LinearLayout {
 		if (iOSStyleable) {
 			int paddingLeft = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.setting_view_min_height), getResources().getDisplayMetrics())
 					+ (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.setting_view_lr_padding), getResources().getDisplayMetrics());
-			divider.setPadding(paddingLeft, 0, 0,0);
+			divider.setPadding(paddingLeft, 0, 0, 0);
 		}
 
 		addView(divider, lps);
@@ -148,8 +149,14 @@ public class SettingView extends LinearLayout {
 
 		int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.setting_view_min_height), getResources().getDisplayMetrics());
 		LayoutParams lps = new LayoutParams(LayoutParams.MATCH_PARENT, height);
+        //
+		ViewGroup parent = (ViewGroup)itemView.getParent();
+		if(parent!=null){
+			parent.removeAllViewsInLayout();
+		}
+            addView(itemView, lps);
 
-		addView(itemView, lps);
+
 	}
 
 	public interface onSettingViewItemClickListener {

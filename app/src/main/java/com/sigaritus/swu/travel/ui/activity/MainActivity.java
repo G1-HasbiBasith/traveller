@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTabHost.setup(this, getSupportFragmentManager(), R.id.real_tab_content);
 
         for (int i = 0; i < tabs.length; i++) {
+
             fragmentTabHost.addTab(fragmentTabHost.newTabSpec(tabs[i]).setIndicator(getTabview(i)),
                     fragments[i],null);
         }

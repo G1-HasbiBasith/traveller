@@ -1,13 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:orientation="vertical"
-    >
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        />
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <com.sigaritus.swu.travel.ui.views.pinnedList.PinnedSectionListView
 
         android:id="@+id/destination_list"
@@ -17,5 +13,6 @@
         android:divider="@null"
         android:footerDividersEnabled="true"
         android:headerDividersEnabled="true" />
+
 </LinearLayout>
 
