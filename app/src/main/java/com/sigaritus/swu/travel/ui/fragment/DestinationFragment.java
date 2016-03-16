@@ -59,8 +59,6 @@ public class DestinationFragment extends BaseFragment implements View.OnClickLis
     }
 
 
-
-
     private boolean hasHeaderAndFooter;
     private boolean isFastScroll;
     private boolean addPadding;
@@ -70,7 +68,6 @@ public class DestinationFragment extends BaseFragment implements View.OnClickLis
         int padding = addPadding ? (int) (16 * density) : 0;
         list.setPadding(padding, padding, padding, padding);
     }
-
 
     @SuppressLint("NewApi")
     private void initializeAdapter(ListView list) {

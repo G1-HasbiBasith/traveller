@@ -38,13 +38,18 @@
         </activity>
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar_"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar_" >
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_splash"
             android:theme="@style/AppTheme.NoActionBar_" >
+        </activity>
+        <activity
+            android:name=".ui.activity.SendTextActivity"
+            android:label="@string/title_activity_send_text"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

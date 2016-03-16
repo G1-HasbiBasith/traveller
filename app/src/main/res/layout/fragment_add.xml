@@ -1,9 +1,8 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-   >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -13,7 +12,13 @@
         android:gravity="center"
         android:textColor="#77111111"
         android:textSize="30sp"
+        android:visibility="gone"
         />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -26,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:id="@+id/send_text"
             android:src="@drawable/ic_description_black_36dp"
             />
         <ImageView
@@ -33,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:id="@+id/send_photo"
             android:src="@drawable/ic_local_see_black_24dp"
             />
         <ImageView
@@ -40,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:id="@+id/send_position"
             android:src="@drawable/ic_pin_drop_black_24dp"
             />
     </LinearLayout>

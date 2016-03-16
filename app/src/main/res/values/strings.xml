@@ -28,7 +28,8 @@
     <string name="error_field_required">必填项</string>
     <string name="permission_rationale">
     </string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash">欢迎</string>
 
     <string name="logout">退出</string>
+    <string name="title_activity_send_text">游记</string>
 </resources>
