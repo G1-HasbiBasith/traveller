@@ -32,4 +32,5 @@
 
     <string name="logout">退出</string>
     <string name="title_activity_send_text">游记</string>
+    <string name="title_activity_pic">选择图片</string>
 </resources>

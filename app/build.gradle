@@ -34,6 +34,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.wang.avi:library:1.0.3'
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.github.vipulasri:timelineview:1.0.0'
     compile files('libs/avoscloud-push-v3.13.4.jar')

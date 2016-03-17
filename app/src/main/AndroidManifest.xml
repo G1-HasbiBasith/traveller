@@ -51,6 +51,11 @@
             android:label="@string/title_activity_send_text"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".ui.activity.PicActivity"
+            android:label="@string/title_activity_pic"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

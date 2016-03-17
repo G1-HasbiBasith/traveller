@@ -19,9 +19,11 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.sigaritus.swu.travel.R;
+import com.sigaritus.swu.travel.ui.activity.PicActivity;
 import com.sigaritus.swu.travel.ui.activity.SendTextActivity;
 import com.sigaritus.swu.travel.ui.views.timeline.TimeLineAdapter;
 import com.sigaritus.swu.travel.ui.views.timeline.TimeLineModel;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public class AddFragment extends BaseFragment {
 
     private TimeLineAdapter mTimeLineAdapter;
 
+    private AVLoadingIndicatorView loading;
     private List<TimeLineModel> mDataList = new ArrayList<>();
 
     public static AddFragment newInstance() {
@@ -57,6 +60,8 @@ public class AddFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
+        loading = (AVLoadingIndicatorView)view.findViewById(R.id.avloadingIndicatorView);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -64,6 +69,8 @@ public class AddFragment extends BaseFragment {
         initView();
 
         ImageView send_text = (ImageView) view.findViewById(R.id.send_text);
+        ImageView send_pic = (ImageView)view.findViewById(R.id.send_photo);
+        ImageView send_pos = (ImageView)view.findViewById(R.id.send_position);
 
         send_text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,12 +79,25 @@ public class AddFragment extends BaseFragment {
                 getActivity().startActivity(intent);
             }
         });
+        send_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PicActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+        send_pos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         return view;
     }
 
     private void initView() {
-
+        startAnim();
         AVUser currentUser = AVUser.getCurrentUser();
 
         AVQuery<AVObject> query = new AVQuery<AVObject>("Post");
@@ -97,7 +117,8 @@ public class AddFragment extends BaseFragment {
 
                     mTimeLineAdapter = new TimeLineAdapter(mDataList);
                     mRecyclerView.setAdapter(mTimeLineAdapter);
-                    mDataList  = new ArrayList<>();
+                    stopAnim();
+                    mDataList = new ArrayList<>();
                 } else {
                     Log.d("失败", "查询错误: " + e.getMessage());
                 }
@@ -106,7 +127,15 @@ public class AddFragment extends BaseFragment {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    void startAnim(){
+        Log.d("anim","start");
+        loading.setVisibility(View.VISIBLE);
+    }
+
+    void stopAnim(){
+        Log.d("anim","stop");
+        loading.setVisibility(View.GONE);
+    }
 
 
     @Override

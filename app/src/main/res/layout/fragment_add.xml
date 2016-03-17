@@ -1,24 +1,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/loginlogo_"
-        android:text="记录旅行之美"
         android:gravity="center"
+        android:text="记录旅行之美"
         android:textColor="#77111111"
         android:textSize="30sp"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avloadingIndicatorView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center"
+        app:indicator="Pacman"
+        app:indicator_color="@color/colorPrimary" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -26,30 +37,30 @@
         android:orientation="horizontal"
 
         >
+
         <ImageView
+            android:id="@+id/send_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:id="@+id/send_text"
-            android:src="@drawable/ic_description_black_36dp"
-            />
+            android:layout_weight="1"
+            android:src="@drawable/ic_description_black_36dp" />
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
             android:id="@+id/send_photo"
-            android:src="@drawable/ic_local_see_black_24dp"
-            />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/ic_local_see_black_24dp" />
+
+        <ImageView
             android:id="@+id/send_position"
-            android:src="@drawable/ic_pin_drop_black_24dp"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/ic_pin_drop_black_24dp" />
     </LinearLayout>
 
 </LinearLayout>
