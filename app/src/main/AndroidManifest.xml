@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -45,16 +46,28 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_splash"
             android:theme="@style/AppTheme.NoActionBar_" >
+
         </activity>
         <activity
             android:name=".ui.activity.SendTextActivity"
             android:label="@string/title_activity_send_text"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar_" >
         </activity>
         <activity
             android:name=".ui.activity.PicActivity"
             android:label="@string/title_activity_pic"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar_" >
+        </activity>
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
     </application>
 

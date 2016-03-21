@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class MineFragment extends BaseFragment {
     private SettingData mItemData = null;
     private List<SettingViewItemData> mListData = new ArrayList<SettingViewItemData>();
 
+
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
         return fragment;
@@ -55,6 +57,8 @@ public class MineFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
 
+        AppCompatActivity ac =(AppCompatActivity)getActivity();
+        ac.getSupportActionBar().hide();
 
         mSettingView = (SettingView) view.findViewById(R.id.main_setting_view);
 
@@ -163,6 +167,12 @@ public class MineFragment extends BaseFragment {
         mListData =new ArrayList<SettingViewItemData>();
     }
 
+    @Override
+    public void onStop() {
+        AppCompatActivity ac =(AppCompatActivity)getActivity();
+        ac.getSupportActionBar().show();
+        super.onStop();
+    }
 
     @Override
     public void onAttach(Activity activity) {

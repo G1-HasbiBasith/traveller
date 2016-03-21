@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVFile;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.ui.views.image.ImageFloder;
 import com.sigaritus.swu.travel.ui.views.image.ListImageDirPopupWindow;
@@ -33,6 +34,7 @@ import com.sigaritus.swu.travel.ui.views.image.MyAdapter;
 import com.sigaritus.swu.travel.util.ToastUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,10 +80,8 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
 
     private ListImageDirPopupWindow mListImageDirPopupWindow;
 
-    private Handler mHandler = new Handler()
-    {
-        public void handleMessage(android.os.Message msg)
-        {
+    private Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
             mProgressDialog.dismiss();
             // 为View绑定数据
             data2View();
@@ -93,10 +93,8 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
     /**
      * 为View绑定数据
      */
-    private void data2View()
-    {
-        if (mImgDir == null)
-        {
+    private void data2View() {
+        if (mImgDir == null) {
             Toast.makeText(getApplicationContext(), "擦，一张图片没扫描到",
                     Toast.LENGTH_SHORT).show();
             return;
@@ -110,13 +108,14 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
                 R.layout.grid_item, mImgDir.getAbsolutePath());
         mGirdView.setAdapter(mAdapter);
         mImageCount.setText(totalCount + "张");
-    };
+    }
+
+    ;
 
     /**
      * 初始化展示文件夹的popupWindw
      */
-    private void initListDirPopupWindw()
-    {
+    private void initListDirPopupWindw() {
         mListImageDirPopupWindow = new ListImageDirPopupWindow(
                 ViewGroup.LayoutParams.MATCH_PARENT, (int) (mScreenHeight * 0.7),
                 mImageFloders, LayoutInflater.from(getApplicationContext())
@@ -147,6 +146,19 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_save) {
+                    Log.d("---", "--" + MyAdapter.mSelectedImage.get(0) + MyAdapter.mSelectedImage.size());
+                    AVFile file = null;
+                    try {
+
+                        for (String str : MyAdapter.mSelectedImage) {
+
+                            file = AVFile.withAbsoluteLocalPath("dubai.jpg",
+                                    Environment.getExternalStorageDirectory() + "/dubai.jpg");
+                            file.saveInBackground();
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
                     ToastUtils.showShort("保存！");
                 }
@@ -165,22 +177,18 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
 
     }
 
-    private void getImages()
-    {
+    private void getImages() {
         if (!Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED))
-        {
+                Environment.MEDIA_MOUNTED)) {
             Toast.makeText(this, "暂无外部存储", Toast.LENGTH_SHORT).show();
             return;
         }
         // 显示进度条
         mProgressDialog = ProgressDialog.show(this, null, "正在加载...");
 
-        new Thread(new Runnable()
-        {
+        new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
 
                 String firstImage = null;
 
@@ -192,12 +200,11 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
                 Cursor mCursor = mContentResolver.query(mImageUri, null,
                         MediaStore.Images.Media.MIME_TYPE + "=? or "
                                 + MediaStore.Images.Media.MIME_TYPE + "=?",
-                        new String[] { "image/jpeg", "image/png" },
+                        new String[]{"image/jpeg", "image/png"},
                         MediaStore.Images.Media.DATE_MODIFIED);
 
                 Log.e("TAG", mCursor.getCount() + "");
-                while (mCursor.moveToNext())
-                {
+                while (mCursor.moveToNext()) {
                     // 获取图片的路径
                     String path = mCursor.getString(mCursor
                             .getColumnIndex(MediaStore.Images.Media.DATA));
@@ -213,11 +220,9 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
                     String dirPath = parentFile.getAbsolutePath();
                     ImageFloder imageFloder = null;
                     // 利用一个HashSet防止多次扫描同一个文件夹（不加这个判断，图片多起来还是相当恐怖的~~）
-                    if (mDirPaths.contains(dirPath))
-                    {
+                    if (mDirPaths.contains(dirPath)) {
                         continue;
-                    } else
-                    {
+                    } else {
                         mDirPaths.add(dirPath);
                         // 初始化imageFloder
                         imageFloder = new ImageFloder();
@@ -225,11 +230,9 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
                         imageFloder.setFirstImagePath(path);
                     }
 
-                    int picSize = parentFile.list(new FilenameFilter()
-                    {
+                    int picSize = parentFile.list(new FilenameFilter() {
                         @Override
-                        public boolean accept(File dir, String filename)
-                        {
+                        public boolean accept(File dir, String filename) {
                             if (filename.endsWith(".jpg")
                                     || filename.endsWith(".png")
                                     || filename.endsWith(".jpeg"))
@@ -242,8 +245,7 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
                     imageFloder.setCount(picSize);
                     mImageFloders.add(imageFloder);
 
-                    if (picSize > mPicsSize)
-                    {
+                    if (picSize > mPicsSize) {
                         mPicsSize = picSize;
                         mImgDir = parentFile;
                     }
@@ -264,8 +266,7 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
     /**
      * 初始化View
      */
-    private void initView()
-    {
+    private void initView() {
         mGirdView = (GridView) findViewById(R.id.id_gridView);
         mChooseDir = (TextView) findViewById(R.id.id_choose_dir);
         mImageCount = (TextView) findViewById(R.id.id_total_count);
@@ -274,16 +275,13 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
 
     }
 
-    private void initEvent()
-    {
+    private void initEvent() {
         /**
          * 为底部的布局设置点击事件，弹出popupWindow
          */
-        mBottomLy.setOnClickListener(new View.OnClickListener()
-        {
+        mBottomLy.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 mListImageDirPopupWindow
                         .setAnimationStyle(R.style.anim_popup_dir);
                 mListImageDirPopupWindow.showAsDropDown(mBottomLy, 0, 0);
@@ -297,15 +295,12 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
     }
 
     @Override
-    public void selected(ImageFloder floder)
-    {
+    public void selected(ImageFloder floder) {
 
         mImgDir = new File(floder.getDir());
-        mImgs = Arrays.asList(mImgDir.list(new FilenameFilter()
-        {
+        mImgs = Arrays.asList(mImgDir.list(new FilenameFilter() {
             @Override
-            public boolean accept(File dir, String filename)
-            {
+            public boolean accept(File dir, String filename) {
                 if (filename.endsWith(".jpg") || filename.endsWith(".png")
                         || filename.endsWith(".jpeg"))
                     return true;
