@@ -38,4 +38,6 @@
     <string name="share_qq_strings">QQ分享</string>
     <string name="search_hint">输入搜索内容</string>
     <string name="title_activity_search">搜索</string>
+    <string name="title_activity_send">发布</string>
+    <string name="action_add">发布</string>
 </resources>

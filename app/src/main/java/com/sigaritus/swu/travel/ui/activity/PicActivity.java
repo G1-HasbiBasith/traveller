@@ -2,6 +2,7 @@ package com.sigaritus.swu.travel.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.avos.avoscloud.AVFile;
 import com.sigaritus.swu.travel.R;
+import com.sigaritus.swu.travel.constants.Constants;
 import com.sigaritus.swu.travel.ui.views.image.ImageFloder;
 import com.sigaritus.swu.travel.ui.views.image.ListImageDirPopupWindow;
 import com.sigaritus.swu.travel.ui.views.image.MyAdapter;
@@ -142,30 +144,6 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
         setContentView(R.layout.activity_pic);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_save) {
-                    Log.d("---", "--" + MyAdapter.mSelectedImage.get(0) + MyAdapter.mSelectedImage.size());
-                    AVFile file = null;
-                    try {
-
-                        for (String str : MyAdapter.mSelectedImage) {
-
-                            file = AVFile.withAbsoluteLocalPath("dubai.jpg",
-                                    Environment.getExternalStorageDirectory() + "/dubai.jpg");
-                            file.saveInBackground();
-                        }
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-
-                    ToastUtils.showShort("保存！");
-                }
-                return false;
-            }
-        });
-
 
         DisplayMetrics outMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
@@ -325,4 +303,24 @@ public class PicActivity extends AppCompatActivity implements ListImageDirPopupW
         getMenuInflater().inflate(R.menu.menu_send, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                String[] list = MyAdapter.mSelectedImage.toArray(new String[MyAdapter.mSelectedImage.size()]);
+                bundle.putStringArray("piclist", list);
+                intent.putExtra("pic",bundle);
+                setResult(Constants.RESULT_PIC, intent);
+
+                finish();
+                ;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+

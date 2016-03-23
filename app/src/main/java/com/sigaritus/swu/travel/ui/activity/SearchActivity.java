@@ -65,9 +65,7 @@ public class SearchActivity extends AppCompatActivity {
             case R.id.menu_search:
                 this.onSearchRequested();
                 return true;
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

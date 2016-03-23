@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,8 @@ public class DestinationFragment extends BaseFragment implements View.OnClickLis
         View view = inflater.inflate(R.layout.fragment_destination, container, false);
         ListView list = (ListView)view.findViewById(R.id.destination_list);
 
+        AppCompatActivity ac =(AppCompatActivity)getActivity();
+        ac.getSupportActionBar().hide();
 
         initializeAdapter(list);
         initializePadding(list);
@@ -98,7 +101,8 @@ public class DestinationFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onStop() {
-
+        AppCompatActivity ac =(AppCompatActivity)getActivity();
+        ac.getSupportActionBar().show();
         super.onStop();
 
     }

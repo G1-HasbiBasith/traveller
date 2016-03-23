@@ -15,7 +15,7 @@ import com.avos.avoscloud.AVUser;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.util.ToastUtils;
 
-public class SendTextActivity extends AppCompatActivity {
+public class MyPublishedActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

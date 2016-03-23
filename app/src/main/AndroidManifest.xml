@@ -46,10 +46,9 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_splash"
             android:theme="@style/AppTheme.NoActionBar_" >
-
         </activity>
         <activity
-            android:name=".ui.activity.SendTextActivity"
+            android:name=".ui.activity.MyPublishedActivity"
             android:label="@string/title_activity_send_text"
             android:theme="@style/AppTheme.NoActionBar_" >
         </activity>
@@ -66,8 +65,20 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
+
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".ui.activity.SendActivity"
+            android:label="@string/title_activity_send"
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".ui.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar_" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity" />
         </activity>
     </application>
 

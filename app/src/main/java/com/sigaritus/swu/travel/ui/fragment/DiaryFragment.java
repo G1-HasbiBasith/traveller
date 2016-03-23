@@ -1,17 +1,13 @@
 package com.sigaritus.swu.travel.ui.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
@@ -19,8 +15,6 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.sigaritus.swu.travel.R;
-import com.sigaritus.swu.travel.ui.activity.PicActivity;
-import com.sigaritus.swu.travel.ui.activity.SendTextActivity;
 import com.sigaritus.swu.travel.ui.views.timeline.TimeLineAdapter;
 import com.sigaritus.swu.travel.ui.views.timeline.TimeLineModel;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -28,7 +22,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddFragment extends BaseFragment {
+public class DiaryFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private RecyclerView mRecyclerView;
@@ -38,12 +32,12 @@ public class AddFragment extends BaseFragment {
     private AVLoadingIndicatorView loading;
     private List<TimeLineModel> mDataList = new ArrayList<>();
 
-    public static AddFragment newInstance() {
-        AddFragment fragment = new AddFragment();
+    public static DiaryFragment newInstance() {
+        DiaryFragment fragment = new DiaryFragment();
         return fragment;
     }
 
-    public AddFragment() {
+    public DiaryFragment() {
         // Required empty public constructor
     }
 
@@ -68,36 +62,37 @@ public class AddFragment extends BaseFragment {
 
         initView();
 
-        ImageView send_text = (ImageView) view.findViewById(R.id.send_text);
-        ImageView send_pic = (ImageView)view.findViewById(R.id.send_photo);
-        ImageView send_pos = (ImageView)view.findViewById(R.id.send_position);
+//        ImageView send_text = (ImageView) view.findViewById(R.id.send_text);
+//        ImageView send_pic = (ImageView)view.findViewById(R.id.send_photo);
+//        ImageView send_pos = (ImageView)view.findViewById(R.id.send_position);
 
-        send_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SendTextActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
-        send_pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PicActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
-        send_pos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        send_text.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), MyPublishedActivity.class);
+//                getActivity().startActivity(intent);
+//            }
+//        });
+//        send_pic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), PicActivity.class);
+//                getActivity().startActivity(intent);
+//            }
+//        });
+//        send_pos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         return view;
     }
 
     private void initView() {
         startAnim();
+        getActivity().invalidateOptionsMenu();
         AVUser currentUser = AVUser.getCurrentUser();
 
         AVQuery<AVObject> query = new AVQuery<AVObject>("Post");

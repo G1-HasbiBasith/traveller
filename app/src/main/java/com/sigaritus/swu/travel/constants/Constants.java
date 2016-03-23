@@ -14,5 +14,8 @@ public class Constants {
 
     public static final String MasterKey = "Rf6b0CQn6Frude7vXaNOTGqp";
 
+    public static final int REQUEST_CODE =1;
+
+    public static final int RESULT_PIC = 2;
 
 }
