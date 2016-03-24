@@ -40,4 +40,5 @@
     <string name="title_activity_search">搜索</string>
     <string name="title_activity_send">发布</string>
     <string name="action_add">发布</string>
+    <string name="title_activity_push">PushActivity</string>
 </resources>

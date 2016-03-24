@@ -20,7 +20,15 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
-
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/send_loading"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center"
+        app:indicator="SemiCircleSpin"
+        android:visibility="gone"
+        app:indicator_color="@color/colorPrimary" />
     <include layout="@layout/content_send" />
 
 

@@ -1,7 +1,10 @@
 package com.sigaritus.swu.travel.ui.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -21,6 +24,7 @@ import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.constants.Constants;
 import com.sigaritus.swu.travel.network.UploadLatch;
 import com.sigaritus.swu.travel.util.ToastUtils;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -33,8 +37,8 @@ public class SendActivity extends AppCompatActivity {
     private ImageView loc;
     private String[] list;
     private EditText send_text;
-
-
+    private AVLoadingIndicatorView loading;
+    private SendHandler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,10 @@ public class SendActivity extends AppCompatActivity {
         loc = (ImageView) findViewById(R.id.send_loc);
 
         send_text = (EditText) findViewById(R.id.send_text);
+
+        loading = (AVLoadingIndicatorView)findViewById(R.id.send_loading);
+
+        handler = new SendHandler();
 
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +73,18 @@ public class SendActivity extends AppCompatActivity {
         });
     }
 
+    class SendHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what==1){
+                stopAnim();
+                ToastUtils.showShort("发送成功");
+                finish();
+            }
+
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_send, menu);
@@ -80,7 +100,7 @@ public class SendActivity extends AppCompatActivity {
                 } else {
 
                     if (list.length > 0) {
-
+                        startAnim();
                         new Thread(){
                             @Override
                             public void run() {
@@ -88,6 +108,7 @@ public class SendActivity extends AppCompatActivity {
                                 AVUser user = AVUser.getCurrentUser();
                                 post.put("username", user.getUsername());
                                 post.put("content", send_text.getText());
+
                                 for (int i = 0; i < list.length; i++) {
                                     try {
                                         AVObject image = new AVObject("Image");
@@ -108,15 +129,27 @@ public class SendActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
                                 }
+                                handler.sendEmptyMessage(1);
                             }
+
+
                         }.start();
 
 
                     }
-//
                 }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void startAnim(){
+        Log.d("anim","start");
+        loading.setVisibility(View.VISIBLE);
+    }
+
+    void stopAnim(){
+        Log.d("anim","stop");
+        loading.setVisibility(View.GONE);
     }
 
     @Override

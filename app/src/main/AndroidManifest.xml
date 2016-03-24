@@ -48,11 +48,6 @@
             android:theme="@style/AppTheme.NoActionBar_" >
         </activity>
         <activity
-            android:name=".ui.activity.MyPublishedActivity"
-            android:label="@string/title_activity_send_text"
-            android:theme="@style/AppTheme.NoActionBar_" >
-        </activity>
-        <activity
             android:name=".ui.activity.PicActivity"
             android:label="@string/title_activity_pic"
             android:theme="@style/AppTheme.NoActionBar_" >
@@ -73,12 +68,30 @@
         <activity
             android:name=".ui.activity.SendActivity"
             android:label="@string/title_activity_send"
-            android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar_" >
+            android:theme="@style/AppTheme.NoActionBar_"
+            android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.MainActivity" />
+        </activity>
+
+        <service
+            android:name="com.avos.avoscloud.PushService"
+            android:exported="true" />
+
+        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.activity.PushActivity"
+            android:label="@string/title_activity_push"
+            android:theme="@style/AppTheme" >
         </activity>
     </application>
 

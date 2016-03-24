@@ -9,12 +9,21 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.GetCallback;
+import com.avos.avoscloud.PushService;
+import com.avos.avoscloud.SaveCallback;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.ui.fragment.DiaryFragment;
 import com.sigaritus.swu.travel.ui.fragment.BaseFragment;
@@ -39,13 +48,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tabs = MainActivity.this.getResources().getStringArray(R.array.tabs);
+        setPush();
         initViews();
     }
 
+    private void setPush(){
+        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            public void done(AVException e) {
+                if (e == null) {
+                    // 保存成功
+                    String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+
+                } else {
+                    // 保存失败，输出错误信息
+                }
+            }
+        });
+        PushService.setDefaultPushCallback(this, PushActivity.class);
+
+        PushService.subscribe(this, "public", PushActivity.class);
+        PushService.subscribe(this, "private", PushActivity.class);
+        PushService.subscribe(this, "protected", PushActivity.class);
+    }
 
     private void initViews() {
 
-//        container = (FrameLayout)findViewById(R.id.fragment_container);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         actionBar = this.getSupportActionBar();

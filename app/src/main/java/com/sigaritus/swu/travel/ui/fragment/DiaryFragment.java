@@ -62,31 +62,6 @@ public class DiaryFragment extends BaseFragment {
 
         initView();
 
-//        ImageView send_text = (ImageView) view.findViewById(R.id.send_text);
-//        ImageView send_pic = (ImageView)view.findViewById(R.id.send_photo);
-//        ImageView send_pos = (ImageView)view.findViewById(R.id.send_position);
-
-//        send_text.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(), MyPublishedActivity.class);
-//                getActivity().startActivity(intent);
-//            }
-//        });
-//        send_pic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(), PicActivity.class);
-//                getActivity().startActivity(intent);
-//            }
-//        });
-//        send_pos.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-
         return view;
     }
 
