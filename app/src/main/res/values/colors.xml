@@ -12,4 +12,7 @@
 
     <color name="setting_view_item_title_text">#FF000000</color>
     <color name="setting_view_item_subtitle_text">#FFCCCCCC</color>
+
+    <color name="hl">#4f6591</color>
+    <color name="hl_dk">#25255b</color>
 </resources>
