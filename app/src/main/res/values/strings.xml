@@ -41,4 +41,7 @@
     <string name="title_activity_send">发布</string>
     <string name="action_add">发布</string>
     <string name="title_activity_push">PushActivity</string>
+    <string name="action_add_post">发布游记</string>
+    <string name="action_add_tour">发布旅行</string>
+    <string name="action_add_friends">添加好友</string>
 </resources>

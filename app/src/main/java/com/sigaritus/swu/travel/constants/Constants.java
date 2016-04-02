@@ -14,6 +14,18 @@ public class Constants {
 
     public static final String MasterKey = "Rf6b0CQn6Frude7vXaNOTGqp";
 
+    public static final String Sina_appid = "1451636210";
+
+    public static final String Sina_appscretkey ="83c362882fef454aa94efb075995691e";
+
+    public static final String Sina_callback="https://leancloud.cn/1.1/sns/callback/qjfi8jyyqzv19dxv";
+
+    public static final String Qq_appid = "1105232230";
+
+    public static final String Qq_appscretkey ="sEWpAxJFapHe42fr";
+
+    public static final String Qq_callback="https://leancloud.cn/1.1/sns/callback/silct98wcbvywsk3";
+
     public static final int REQUEST_CODE =1;
 
     public static final int RESULT_PIC = 2;
