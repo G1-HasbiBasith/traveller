@@ -1,12 +1,9 @@
 package com.sigaritus.swu.travel.ui.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,13 +19,11 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.constants.Constants;
-import com.sigaritus.swu.travel.network.UploadLatch;
+import com.sigaritus.swu.travel.dataprovider.UploadLatch;
 import com.sigaritus.swu.travel.util.ToastUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 public class SendActivity extends AppCompatActivity {

@@ -90,6 +90,7 @@ public class MineFragment extends BaseFragment {
                 // TODO Auto-generated method stub
                 switch (index) {
                     case 0:
+                        
                         break;
                     case 1:
                         break;

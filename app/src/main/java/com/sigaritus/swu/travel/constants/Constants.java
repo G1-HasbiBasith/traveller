@@ -26,6 +26,8 @@ public class Constants {
 
     public static final String Qq_callback="https://leancloud.cn/1.1/sns/callback/silct98wcbvywsk3";
 
+    public static final String qunar_travelDiary ="http://apis.baidu.com/qunartravel/travellist/travellist?query=“”&page=1";
+
     public static final int REQUEST_CODE =1;
 
     public static final int RESULT_PIC = 2;

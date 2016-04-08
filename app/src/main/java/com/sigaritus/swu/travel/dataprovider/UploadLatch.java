@@ -1,11 +1,7 @@
-package com.sigaritus.swu.travel.network;
-
-import android.util.Log;
+package com.sigaritus.swu.travel.dataprovider;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.ProgressCallback;
 import com.avos.avoscloud.SaveCallback;
 
 import java.util.concurrent.CountDownLatch;

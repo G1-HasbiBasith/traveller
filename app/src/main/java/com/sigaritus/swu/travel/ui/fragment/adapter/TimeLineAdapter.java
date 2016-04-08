@@ -96,6 +96,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
             AVQuery<AVObject> imgquery = new AVQuery<AVObject>("Image");
 
             imgquery.whereMatchesQuery("post",innerQuery);
+
             imgquery.findInBackground(new FindCallback<AVObject>() {
                 @Override
                 public void done(List<AVObject> list, AVException e) {

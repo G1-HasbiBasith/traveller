@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.sigaritus.swu.travel.network.HttpManager;
+import com.sigaritus.swu.travel.dataprovider.HttpManager;
 import com.sigaritus.swu.travel.util.ToastUtils;
 
 

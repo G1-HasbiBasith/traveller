@@ -1,4 +1,4 @@
-package com.sigaritus.swu.travel.network;
+package com.sigaritus.swu.travel.dataprovider;
 
 import android.content.Context;
 

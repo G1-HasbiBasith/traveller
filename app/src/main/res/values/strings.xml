@@ -44,4 +44,5 @@
     <string name="action_add_post">发布游记</string>
     <string name="action_add_tour">发布旅行</string>
     <string name="action_add_friends">添加好友</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
 </resources>
