@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVUser;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.ui.activity.SettingActivity;
@@ -20,17 +22,21 @@ import com.sigaritus.swu.travel.ui.views.settings.entity.SettingData;
 import com.sigaritus.swu.travel.ui.views.settings.entity.SettingViewItemData;
 import com.sigaritus.swu.travel.ui.views.settings.item.BasicItemViewH;
 import com.sigaritus.swu.travel.util.ToastUtils;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MineFragment extends BaseFragment {
     private SettingView mSettingView = null;
-    private Button logout= null;
-    private TextView username= null;
+    private Button logout = null;
+    private TextView username = null;
     private SettingData mItemData = null;
+    private CircleImageView avatar = null;
     private List<SettingViewItemData> mListData = new ArrayList<SettingViewItemData>();
 
 
@@ -59,16 +65,25 @@ public class MineFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
 
-        AppCompatActivity ac =(AppCompatActivity)getActivity();
+        AppCompatActivity ac = (AppCompatActivity) getActivity();
         ac.getSupportActionBar().hide();
 
         mSettingView = (SettingView) view.findViewById(R.id.main_setting_view);
 
-        username = (TextView)view.findViewById(R.id.username);
+        username = (TextView) view.findViewById(R.id.username);
 
+        avatar = (CircleImageView) view.findViewById(R.id.user_avatar);
+
+        if (currentUser.getAVFile("avatar") != null) {
+            AVFile file = currentUser.getAVFile("avatar");
+            Picasso.with(getContext())
+                    .load(file.getThumbnailUrl(false, 100, 100))
+                    .into(avatar);
+        }
         username.setText(currentUser.getUsername());
 
-        logout = (Button)view.findViewById(R.id.logout);
+
+        logout = (Button) view.findViewById(R.id.logout);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +95,7 @@ public class MineFragment extends BaseFragment {
         });
 
 
-
         initViews();
-
 
 
         mSettingView.setOnSettingViewItemClickListener(new SettingView.onSettingViewItemClickListener() {
@@ -175,12 +188,12 @@ public class MineFragment extends BaseFragment {
 
         mSettingView.setAdapter(mListData);
 
-        mListData =new ArrayList<SettingViewItemData>();
+        mListData = new ArrayList<SettingViewItemData>();
     }
 
     @Override
     public void onStop() {
-        AppCompatActivity ac =(AppCompatActivity)getActivity();
+        AppCompatActivity ac = (AppCompatActivity) getActivity();
         ac.getSupportActionBar().show();
         super.onStop();
     }

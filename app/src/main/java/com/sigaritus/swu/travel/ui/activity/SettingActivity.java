@@ -31,10 +31,12 @@ public class SettingActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 switch (index) {
                     case 0:
-                        Intent intent = new Intent(SettingActivity.this,ResetPasswordActivity.class);
-                        startActivity(intent);
+                        Intent intent0 = new Intent(SettingActivity.this,ResetPasswordActivity.class);
+                        startActivity(intent0);
                         break;
                     case 1:
+                        Intent intent1 = new Intent(SettingActivity.this,PicHeadImageActivity.class);
+                        startActivity(intent1);
                         break;
                     case 2:
                         break;

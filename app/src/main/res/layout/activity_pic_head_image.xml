@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.sigaritus.swu.travel.ui.activity.PicHeadImageActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="?attr/colorPrimary"
+        android:id="@+id/toolbar_pic"
+        >
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/head_image"
+        android:layout_margin="50dp"
+        android:src="@drawable/ic_default_image"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center_horizontal"
+        />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/choose_pic"
+        android:text="选择图片"
+        />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/upload"
+        android:text="上传"
+        />
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="150dp"
+        android:id="@+id/pic_loading"
+        android:visibility="invisible"
+        app:indicator_color="@color/colorPrimary"
+        app:indicator="LineScale"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

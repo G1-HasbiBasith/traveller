@@ -39,6 +39,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         ToastUtils.showLong("修改完成，请重新登录");
                     }
                 });
+                user.logOut();
             }
         });
 

@@ -3,22 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF7F7F7"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:id="@+id/user_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/default_avatar" />
+        android:layout_marginTop="10dp"
+        android:src="@drawable/default_avatar"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/username"
          />
 
@@ -26,7 +25,7 @@
         android:id="@+id/main_setting_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         app:iOSStyle="false" />
 
     <Button
