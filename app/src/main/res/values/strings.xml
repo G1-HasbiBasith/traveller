@@ -45,4 +45,6 @@
     <string name="action_add_tour">发布旅行</string>
     <string name="action_add_friends">添加好友</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="original_password">原密码</string>
+    <string name="new_password">新密码</string>
 </resources>

@@ -121,6 +121,8 @@
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme" >
         </activity>
+        <activity android:name=".ui.activity.SettingActivity" >
+        </activity>
     </application>
 
 </manifest>

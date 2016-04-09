@@ -1,6 +1,7 @@
 package com.sigaritus.swu.travel.ui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.AVUser;
 import com.sigaritus.swu.travel.R;
+import com.sigaritus.swu.travel.ui.activity.SettingActivity;
 import com.sigaritus.swu.travel.ui.views.settings.SettingView;
 import com.sigaritus.swu.travel.ui.views.settings.entity.SettingData;
 import com.sigaritus.swu.travel.ui.views.settings.entity.SettingViewItemData;
@@ -90,11 +92,19 @@ public class MineFragment extends BaseFragment {
                 // TODO Auto-generated method stub
                 switch (index) {
                     case 0:
-                        
+
                         break;
                     case 1:
                         break;
                     case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        Intent intent = new Intent(getActivity(), SettingActivity.class);
+                        getActivity().startActivity(intent);
                         break;
                     default:
                         break;

@@ -377,7 +377,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            if (isCancelled()) {
                 AVUser.logInInBackground(mEmail, mPassword, new LogInCallback() {
                     public void done(AVUser user, AVException e) {
                         if (e == null) {
@@ -389,7 +388,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                 });
 
-            }
 
             // TODO: register the new account here.
             return true;

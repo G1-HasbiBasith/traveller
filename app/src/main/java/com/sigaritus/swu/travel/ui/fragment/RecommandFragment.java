@@ -109,7 +109,6 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
                     datalist = gson.fromJson(results.toString(), new TypeToken<List<Diary>>() {
                     }.getType());
                     adapter = new DiaryListAdapter(getActivity(),datalist);
-                    ToastUtils.showLong(""+datalist.size());
                     diarylist.setAdapter(adapter);
 
 
