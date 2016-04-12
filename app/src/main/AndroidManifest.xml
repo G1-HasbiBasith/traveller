@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sigaritus.swu.travel">
+    package="com.sigaritus.swu.travel" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -15,16 +14,36 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 访问网络，网络定位需要上网-->
+
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!--允许应用读取低级别的系统日志文件 -->
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
+
     <application
         android:name=".TravelApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="podhqAd1xfIloMrlMvCDjoFDveWMuFwF" />
         <activity
             android:name=".ui.activity.SplashActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar_">
+            android:theme="@style/AppTheme.NoActionBar_" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +54,7 @@
             android:name=".ui.activity.SpotDetailActivity"
             android:label="@string/title_activity_spot_detail"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar_">
+            android:theme="@style/AppTheme.NoActionBar_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.MainActivity" />
@@ -43,26 +62,23 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar_">
-
+            android:theme="@style/AppTheme.NoActionBar_" >
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_splash"
-            android:theme="@style/AppTheme.NoActionBar_">
-
+            android:theme="@style/AppTheme.NoActionBar_" >
         </activity>
         <activity
             android:name=".ui.activity.PicActivity"
             android:label="@string/title_activity_pic"
-            android:theme="@style/AppTheme.NoActionBar_">
-
+            android:theme="@style/AppTheme.NoActionBar_" >
         </activity>
         <activity
             android:name=".ui.activity.SearchActivity"
             android:label="@string/title_activity_search"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -76,7 +92,7 @@
             android:label="@string/title_activity_send"
             android:parentActivityName=".ui.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar_"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.MainActivity" />
@@ -86,7 +102,7 @@
             android:name="com.avos.avoscloud.PushService"
             android:exported="true" />
 
-        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -97,13 +113,12 @@
         <activity
             android:name=".ui.activity.PushActivity"
             android:label="@string/title_activity_push"
-            android:theme="@style/AppTheme">
-
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true">
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -118,25 +133,24 @@
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="adjustResize">
-
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name=".ui.activity.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-            android:theme="@style/AppTheme">
-
+            android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name=".ui.activity.SettingActivity">
-
+        <activity android:name=".ui.activity.SettingActivity" >
         </activity>
         <activity
             android:name=".ui.activity.PicHeadImageActivity"
             android:parentActivityName=".ui.activity.SettingActivity"
-            android:theme="@style/AppTheme.NoActionBar_">
+            android:theme="@style/AppTheme.NoActionBar_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.SettingActivity" />
+        </activity>
+        <activity android:name=".ui.activity.AddScheduleActivity" >
         </activity>
     </application>
 

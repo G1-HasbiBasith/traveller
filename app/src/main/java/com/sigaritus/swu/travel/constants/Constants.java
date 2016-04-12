@@ -16,6 +16,8 @@ public class Constants {
 
     public static final String Sina_appid = "1451636210";
 
+    public static final String baiduMap ="podhqAd1xfIloMrlMvCDjoFDveWMuFwF";
+
     public static final String Sina_appscretkey ="83c362882fef454aa94efb075995691e";
 
     public static final String Sina_callback="https://leancloud.cn/1.1/sns/callback/qjfi8jyyqzv19dxv";

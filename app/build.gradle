@@ -46,7 +46,12 @@ dependencies {
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.jaeger.ninegridimageview:library:1.0.1'
+
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'com.lzy.widget:ninegridview:0.1.2'
+    compile 'com.lzy.widget:view-core:0.1.6'
+    compile 'com.jakewharton:butterknife:7.0.1'
+
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
     compile 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
     compile files('libs/avoscloud-push-v3.13.4.jar')

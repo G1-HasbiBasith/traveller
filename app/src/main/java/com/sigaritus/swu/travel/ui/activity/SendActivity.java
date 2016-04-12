@@ -103,7 +103,7 @@ public class SendActivity extends AppCompatActivity {
                                 AVUser user = AVUser.getCurrentUser();
                                 post.put("username", user.getUsername());
                                 post.put("content", send_text.getText());
-
+                                post.put("avatar",user.getAVFile("avatar"));
                                 for (int i = 0; i < list.length; i++) {
                                     try {
                                         AVObject image = new AVObject("Image");

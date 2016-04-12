@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.SignUpCallback;
@@ -122,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         user.setUsername(email);
         user.setPassword(password);
         user.setEmail(email);
+        //
         Log.i("user-info", password + email);
         user.signUpInBackground(new SignUpCallback() {
             public void done(AVException e) {
@@ -416,6 +418,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     void jump() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
+
         finish();
     }
 
