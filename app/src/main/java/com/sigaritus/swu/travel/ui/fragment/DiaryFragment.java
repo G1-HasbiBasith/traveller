@@ -51,7 +51,6 @@ public class DiaryFragment extends  BaseFragment{
 
     private AVLoadingIndicatorView loading;
 
-
     public static DiaryFragment newInstance() {
         DiaryFragment fragment = new DiaryFragment();
         return fragment;
