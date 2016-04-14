@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -37,6 +39,7 @@ import com.miao.freesizedraggablelayout.FreeSizeDraggableLayout;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.constants.Constants;
 import com.sigaritus.swu.travel.dataprovider.UploadLatch;
+import com.sigaritus.swu.travel.ui.activity.adapter.PreviewImageAdapter;
 import com.sigaritus.swu.travel.util.BitmapUtil;
 import com.sigaritus.swu.travel.util.ToastUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -68,9 +71,9 @@ public class SendActivity extends AppCompatActivity {
     AVLoadingIndicatorView loading;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.previewPics_layout)
-    FreeSizeDraggableLayout previewPics;
-
+    @Bind(R.id.imgpreview_grid)
+    RecyclerView img_preview_grid;
+    PreviewImageAdapter mAdapter;
     private SendHandler handler;
 
     public AMapLocationClient mLocationClient = null;
@@ -91,6 +94,7 @@ public class SendActivity extends AppCompatActivity {
                             + amapLocation.getDistrict() +
                             amapLocation.getStreet());
                     placeLabel.setText(amapLocation.getAddress());
+                    mLocationClient.stopLocation();
                     //amapLocation.getAOIName();//获取当前定位点的AOI信息
                 } else {
                     //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
@@ -117,9 +121,22 @@ public class SendActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         handler = new SendHandler();
-        resize(1);
-        setPreviewPicData(previewPics, list);
+        mAdapter = new PreviewImageAdapter(new String[]{},getApplicationContext());
+        mAdapter.setOnItemClickLitener(new PreviewImageAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(SendActivity.this, PicActivity.class);
+                startActivityForResult(intent, Constants.REQUEST_CODE);
+            }
 
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+        img_preview_grid.setAdapter(mAdapter);
+
+        img_preview_grid.setLayoutManager(new GridLayoutManager(this, 4));
     }
 
     private void initLocData() {
@@ -137,7 +154,7 @@ public class SendActivity extends AppCompatActivity {
         //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable(false);
         //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(2000);
+        mLocationOption.setInterval(1000);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位
@@ -147,74 +164,9 @@ public class SendActivity extends AppCompatActivity {
     @OnClick(R.id.send_loc)
     public void getLoc() {
         mLocationClient.startLocation();
-    }
-
-
-    private void setPreviewPicData(FreeSizeDraggableLayout draggableLayout, String[] imglist) {
-        List<DetailView> list = new ArrayList<>();
-        list.add(new DetailView(new Point(0, 0), 1, 1, createAdd()));
-        if (imglist != null && imglist.length > 0) {
-            Log.d("imglist  ", imglist.length + "-----------");
-            switch ((imglist.length + 1) / 4) {
-                case 0:
-                    //pics less than 4 and 4 included in;
-                    for (int i = 0; i < imglist.length; i++) {
-                        list.add(new DetailView(new Point(i + 1, 0), 1, 1, getImageView(imglist[i])));
-                    }
-                    break;
-                case 1:
-                    //pics more 4 less than 8;
-                    for (int i = 0; i < imglist.length; i++) {
-                        if (i < 3) {
-                            list.add(new DetailView(new Point(i + 1, 0), 1, 1, getImageView(imglist[i])));
-                        } else {
-                            list.add(new DetailView(new Point(i - 3, 1), 1, 1, getImageView(imglist[i])));
-                        }
-                    }
-                    break;
-                case 2:
-                    for (int i = 0; i < imglist.length; i++) {
-                        if (i < 3) {
-                            list.add(new DetailView(new Point(i + 1, 0), 1, 1, getImageView(imglist[i])));
-                        } else if (i < 7) {
-                            list.add(new DetailView(new Point(i - 3, 1), 1, 1, getImageView(imglist[i])));
-                        } else {
-                            list.add(new DetailView(new Point(i - 7, 2), 1, 1, getImageView(imglist[i])));
-                        }
-                    }
-                    break;
-            }
-        }
-        draggableLayout.setList(list);
 
     }
 
-    private View createAdd() {
-        ImageView imageView = new ImageView(getApplicationContext());
-        imageView.setImageResource(R.drawable.ic_default_image);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SendActivity.this, PicActivity.class);
-                startActivityForResult(intent, Constants.REQUEST_CODE);
-            }
-        });
-        return imageView;
-    }
-
-    public ImageView getImageView(String url) {
-        Bitmap bmp = BitmapUtil.getSmallBitmap(url, 70, 70);
-        ImageView unit_img = new ImageView(getApplicationContext());
-        unit_img.setImageBitmap(bmp);
-        unit_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        return unit_img;
-    }
-
-    public void resize(int row) {
-        previewPics.setUnitWidthNum(4);
-        previewPics.setUnitHeightNum(row);
-
-    }
 
     class SendHandler extends Handler {
         @Override
@@ -305,8 +257,7 @@ public class SendActivity extends AppCompatActivity {
             if (list.length > 9) {
                 ToastUtils.showLong("最多只能选择9张图片，蟹蟹。");
             }
-            resize(((list.length + 1) / 4) + 1);
-            setPreviewPicData(previewPics, list);
+
         }
     }
 
@@ -318,10 +269,17 @@ public class SendActivity extends AppCompatActivity {
                 list = b.getStringArray("piclist");
 
                 Log.d("size", list.length + "");
+                mAdapter.setImg_list(list);
 
             }
         }
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLocationClient.onDestroy();
     }
 }
