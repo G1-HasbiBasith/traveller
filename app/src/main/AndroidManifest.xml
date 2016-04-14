@@ -38,8 +38,11 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="podhqAd1xfIloMrlMvCDjoFDveWMuFwF" />
+            android:name="com.amap.api.v2.apikey"
+            android:value="b147cceaafe50012ce97be750488fad2" />
+        <!-- 定位需要的服务 -->
+        <service android:name="com.amap.api.location.APSService" >
+        </service>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:label="@string/app_name"

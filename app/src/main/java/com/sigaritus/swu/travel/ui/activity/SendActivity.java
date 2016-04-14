@@ -14,12 +14,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.Poi;
+import com.baidu.mapapi.SDKInitializer;
 import com.miao.freesizedraggablelayout.DetailView;
 import com.miao.freesizedraggablelayout.FreeSizeDraggableLayout;
 import com.sigaritus.swu.travel.R;
@@ -30,20 +42,26 @@ import com.sigaritus.swu.travel.util.ToastUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SendActivity extends AppCompatActivity {
 
 
     @Bind(R.id.send_loc)
     ImageView loc;
+    @Bind(R.id.place_label)
+    TextView placeLabel;
     String[] list;
-
+    @Bind(R.id.send_content_layout)
+    ViewGroup layout;
     @Bind(R.id.send_text)
     EditText send_text;
     @Bind(R.id.send_loading)
@@ -55,10 +73,43 @@ public class SendActivity extends AppCompatActivity {
 
     private SendHandler handler;
 
+    public AMapLocationClient mLocationClient = null;
+
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date(amapLocation.getTime());
+                    df.format(date);//定位时间
+                    Log.d("amplocation--", amapLocation.getLocationType() +
+                            amapLocation.getLatitude() +
+                            amapLocation.getLongitude() + amapLocation.getAddress() + "---" +
+                            amapLocation.getCountry() + amapLocation.getProvince() + amapLocation.getCity()
+                            + amapLocation.getDistrict() +
+                            amapLocation.getStreet());
+                    placeLabel.setText(amapLocation.getAddress());
+                    //amapLocation.getAOIName();//获取当前定位点的AOI信息
+                } else {
+                    //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_send);
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -71,36 +122,64 @@ public class SendActivity extends AppCompatActivity {
 
     }
 
+    private void initLocData() {
+        AMapLocationClientOption mLocationOption = null;
+        //初始化定位参数
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //设置是否只定位一次,默认为false
+        mLocationOption.setOnceLocation(true);
+        //设置是否强制刷新WIFI，默认为强制刷新
+        mLocationOption.setWifiActiveScan(true);
+        //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setMockEnable(false);
+        //设置定位间隔,单位毫秒,默认为2000ms
+        mLocationOption.setInterval(2000);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+
+    }
+
+    @OnClick(R.id.send_loc)
+    public void getLoc() {
+        mLocationClient.startLocation();
+    }
+
+
     private void setPreviewPicData(FreeSizeDraggableLayout draggableLayout, String[] imglist) {
         List<DetailView> list = new ArrayList<>();
         list.add(new DetailView(new Point(0, 0), 1, 1, createAdd()));
-        if (imglist != null&&imglist.length>0) {
-            Log.d("imglist  ",imglist.length+"-----------");
-            switch ((imglist.length+1) / 4) {
+        if (imglist != null && imglist.length > 0) {
+            Log.d("imglist  ", imglist.length + "-----------");
+            switch ((imglist.length + 1) / 4) {
                 case 0:
                     //pics less than 4 and 4 included in;
                     for (int i = 0; i < imglist.length; i++) {
-                        list.add(new DetailView(new Point(i+1, 0), 1, 1, getImageView(imglist[i])));
+                        list.add(new DetailView(new Point(i + 1, 0), 1, 1, getImageView(imglist[i])));
                     }
                     break;
                 case 1:
                     //pics more 4 less than 8;
                     for (int i = 0; i < imglist.length; i++) {
                         if (i < 3) {
-                            list.add(new DetailView(new Point(i+1,0), 1, 1, getImageView(imglist[i])));
+                            list.add(new DetailView(new Point(i + 1, 0), 1, 1, getImageView(imglist[i])));
                         } else {
-                            list.add(new DetailView(new Point(i-3, 1), 1, 1, getImageView(imglist[i])));
+                            list.add(new DetailView(new Point(i - 3, 1), 1, 1, getImageView(imglist[i])));
                         }
                     }
                     break;
                 case 2:
                     for (int i = 0; i < imglist.length; i++) {
-                        if (i <3) {
-                            list.add(new DetailView(new Point(i+1, 0), 1, 1, getImageView(imglist[i])));
-                        } else if (i <7) {
-                            list.add(new DetailView(new Point(i-3, 1), 1, 1, getImageView(imglist[i])));
+                        if (i < 3) {
+                            list.add(new DetailView(new Point(i + 1, 0), 1, 1, getImageView(imglist[i])));
+                        } else if (i < 7) {
+                            list.add(new DetailView(new Point(i - 3, 1), 1, 1, getImageView(imglist[i])));
                         } else {
-                            list.add(new DetailView(new Point(i-7, 2), 1, 1, getImageView(imglist[i])));
+                            list.add(new DetailView(new Point(i - 7, 2), 1, 1, getImageView(imglist[i])));
                         }
                     }
                     break;
@@ -127,14 +206,13 @@ public class SendActivity extends AppCompatActivity {
         Bitmap bmp = BitmapUtil.getSmallBitmap(url, 70, 70);
         ImageView unit_img = new ImageView(getApplicationContext());
         unit_img.setImageBitmap(bmp);
+        unit_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return unit_img;
     }
 
     public void resize(int row) {
-
         previewPics.setUnitWidthNum(4);
         previewPics.setUnitHeightNum(row);
-
 
     }
 
@@ -149,6 +227,7 @@ public class SendActivity extends AppCompatActivity {
 
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -210,11 +289,13 @@ public class SendActivity extends AppCompatActivity {
     void startAnim() {
         Log.d("anim", "start");
         loading.setVisibility(View.VISIBLE);
+        layout.setVisibility(View.GONE);
     }
 
     void stopAnim() {
         Log.d("anim", "stop");
         loading.setVisibility(View.GONE);
+        layout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -224,7 +305,7 @@ public class SendActivity extends AppCompatActivity {
             if (list.length > 9) {
                 ToastUtils.showLong("最多只能选择9张图片，蟹蟹。");
             }
-            resize(((list.length+1) / 4)+1);
+            resize(((list.length + 1) / 4) + 1);
             setPreviewPicData(previewPics, list);
         }
     }

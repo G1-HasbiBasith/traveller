@@ -136,13 +136,16 @@ public class DiaryFragment extends  BaseFragment{
                         imgquery.findInBackground(new FindCallback<AVObject>() {
                             @Override
                             public void done(List<AVObject> list, AVException e) {
-
-                                for (AVObject image : list) {
-                                    AVFile file = image.getAVFile("file");
-                                    ImageInfo info = new ImageInfo();
-                                    info.setThumbnailUrl(file.getThumbnailUrl(false, 100, 100));
-                                    info.setBigImageUrl(file.getUrl());
-                                    imageinfo.add(info);
+                                if (list.size()>0) {
+                                    for (AVObject image : list) {
+                                        AVFile file = image.getAVFile("file");
+                                        if (file != null) {
+                                            ImageInfo info = new ImageInfo();
+                                            info.setThumbnailUrl(file.getThumbnailUrl(false, 100, 100));
+                                            info.setBigImageUrl(file.getUrl());
+                                            imageinfo.add(info);
+                                        }
+                                    }
                                 }
                             }
                         });
