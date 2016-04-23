@@ -6,11 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVObject;
 import com.sigaritus.swu.travel.R;
+import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -22,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class TourListAdapter extends RecyclerView.Adapter<TourListAdapter.ListViewHolder> {
 
     private Context mContext;
-    private List<AVObject> eventlist;
+    private List<AVObject> tourList;
 
     public TourListAdapter() {
 
@@ -33,9 +36,18 @@ public class TourListAdapter extends RecyclerView.Adapter<TourListAdapter.ListVi
         this.mContext = mContext;
     }
 
-    public TourListAdapter(List<AVObject> eventlist, Context mContext) {
-        this.eventlist = eventlist;
+    public TourListAdapter(Context mContext,List<AVObject> tourList) {
+        this.tourList = tourList;
         this.mContext = mContext;
+    }
+
+    public List<AVObject> getTourList() {
+        return tourList;
+    }
+
+    public void setTourList(List<AVObject> tourList) {
+        this.tourList = tourList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -49,27 +61,42 @@ public class TourListAdapter extends RecyclerView.Adapter<TourListAdapter.ListVi
     @Override
     public void onBindViewHolder(ListViewHolder holder, int position) {
         //set data
+
+        holder.title.setText(tourList.get(position).getString("title"));
+        holder.time.setText(new SimpleDateFormat("yyyy-mm-dd")
+                .format(tourList.get(position).getDate("createdAt")));
+        holder.place.setText("{fa-map-marker} "
+                +tourList.get(position).getString("meetPlace"));
+        holder.pub_user.setText(tourList.get(position).getString("username"));
+        Picasso.with(mContext).load(tourList.get(position).getAVFile("avatar").getUrl())
+                .placeholder(R.drawable.ic_default_image).into(holder.user_img);
+//        Picasso.with(mContext).load(tourList.get(position).getAVFile("cover").getUrl())
+//                .placeholder(R.drawable.ic_default_image).into(holder.cover);
+//        holder.cover.setBackgroundResource();
+
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return tourList.size();
     }
 
     class ListViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout cover;
         TextView title;
         TextView time;
         TextView place;
-        TextView like;
+        TextView pub_user;
         CircleImageView user_img;
 
         ListViewHolder(View itemView) {
 
             super(itemView);
+            cover = (LinearLayout) itemView.findViewById(R.id.unit_background);
             title = (TextView)itemView.findViewById(R.id.tour_title);
             time = (TextView)itemView.findViewById(R.id.pub_time);
             place = (TextView)itemView.findViewById(R.id.event_place);
-            like = (TextView)itemView.findViewById(R.id.like_num);
+            pub_user = (TextView)itemView.findViewById(R.id.pub_name);
             user_img = (CircleImageView)itemView.findViewById(R.id.profile_image);
 
 

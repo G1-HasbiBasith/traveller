@@ -138,17 +138,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        Intent intent;
         switch (item.getItemId()){
             case R.id.search:
-                Intent intent = new Intent(this,SearchActivity.class);
+                intent = new Intent(this,SearchActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_add_post:
-                Intent intent_ = new Intent(this,SendActivity.class);
-                startActivity(intent_);
+               intent = new Intent(this,SendActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_add_tour:
+                intent = new Intent(this,AddScheduleActivity.class);
+                startActivity(intent);
                 return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

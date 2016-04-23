@@ -1,14 +1,21 @@
-<android.support.v7.widget.RecyclerView
+<in.srain.cube.views.ptr.PtrClassicFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tour_list"
+    android:id="@+id/schedule_ptr"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context="com.sigaritus.swu.travel.ui.fragment.MateFragment"
-
     >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tour_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </android.support.v7.widget.RecyclerView>
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
 
-</android.support.v7.widget.RecyclerView>
+
+
 
 
