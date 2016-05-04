@@ -1,6 +1,7 @@
 package com.sigaritus.swu.travel.ui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,6 +16,7 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.sigaritus.swu.travel.R;
+import com.sigaritus.swu.travel.ui.activity.TourDetailActivity;
 import com.sigaritus.swu.travel.ui.fragment.adapter.TourListAdapter;
 
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class MateFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mate, container, false);
@@ -60,6 +62,14 @@ public class MateFragment extends BaseFragment {
 
         tourlist.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TourListAdapter(getContext(),new ArrayList<AVObject>());
+        adapter.setmOnItemClickListener(new TourListAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, AVObject data) {
+                Intent intent = new Intent(getActivity(), TourDetailActivity.class);
+                intent.putExtra("tour",data);
+                getActivity().startActivity(intent);
+            }
+        });
         tourlist.setAdapter(adapter);
         initData(false);
         ptr.setLastUpdateTimeRelateObject(this);
@@ -69,7 +79,6 @@ public class MateFragment extends BaseFragment {
                 initData(true);
             }
         });
-
 
         return view;
 

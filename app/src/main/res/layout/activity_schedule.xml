@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:focusable="true"
+                      android:focusable="true"
                     android:gravity="top|left"
                     android:inputType="textMultiLine"
                     android:drawableLeft="@drawable/ic_description_black_36dp"

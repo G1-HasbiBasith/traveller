@@ -96,7 +96,6 @@ public class DiaryFragment extends  BaseFragment{
                 initData(true);
             }
         });
-
         return view;
     }
 

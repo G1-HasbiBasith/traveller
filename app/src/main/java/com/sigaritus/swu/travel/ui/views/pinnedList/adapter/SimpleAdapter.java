@@ -24,16 +24,16 @@ public class SimpleAdapter extends ArrayAdapter<Item> implements PinnedSectionLi
         super(context, resource, textViewResourceId);
 
         final int sectionsNumber = 6;
-        final String[] sections = {"热门地点","欧洲国家","港澳台","美洲和大洋洲","亚洲国家","国内城市"};
-        final String[][] spots ={{"日本","斯里兰卡","土耳其","韩国"},{"奥地利","西班牙","德国","法国"},
-                {"香港","澳门","基隆","嘉义"},{"纽约","洛杉矶","悉尼","墨尔本"},
-                {"阿拉伯联合酋长国","新加坡","马来西亚","泰国"},
-                {"喀什","苏州","重庆","拉萨"}};
+        final String[] sections = {"热门地点", "国内城市", "港澳台", "亚洲国家", "欧洲国家", "美洲和大洋洲"};
+        final String[][] spots = {{"北京", "大阪", "首尔", "东京"}, {"喀什", "苏州", "重庆", "拉萨"},
+                {"香港", "澳门", "基隆", "嘉义"},
+                {"阿拉伯联合酋长国", "新加坡", "马来西亚", "泰国"},
+                {"奥地利", "西班牙", "德国", "法国"}, {"纽约", "洛杉矶", "悉尼", "墨尔本"}};
 
         prepareSections(sectionsNumber);
 
         int sectionPosition = 0, listPosition = 0;
-        for (char i=0; i<sectionsNumber; i++) {
+        for (char i = 0; i < sectionsNumber; i++) {
             Item section = new Item(Item.SECTION, sections[i]);
             section.sectionPosition = sectionPosition;
             section.listPosition = listPosition++;
@@ -41,7 +41,7 @@ public class SimpleAdapter extends ArrayAdapter<Item> implements PinnedSectionLi
             add(section);
 
             final int itemsNumber = 4;
-            for (int j=0;j<itemsNumber;j++) {
+            for (int j = 0; j < itemsNumber; j++) {
                 Item item = new Item(Item.ITEM, spots[i][j]);
                 item.sectionPosition = sectionPosition;
                 item.listPosition = listPosition++;
@@ -52,16 +52,20 @@ public class SimpleAdapter extends ArrayAdapter<Item> implements PinnedSectionLi
         }
     }
 
-    protected void prepareSections(int sectionsNumber) { }
-    protected void onSectionAdded(Item section, int sectionPosition) { }
+    protected void prepareSections(int sectionsNumber) {
+    }
+
+    protected void onSectionAdded(Item section, int sectionPosition) {
+    }
 
 
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout view = (LinearLayout) super.getView(position, convertView, parent);
 //            view.setTextColor(Color.DKGRAY);
-        final int[] des_pic ={R.drawable.des1,R.drawable.des2,R.drawable.des3,R.drawable.des4};
-        TextView text = (TextView)view.getChildAt(0);
-        ImageView img = (ImageView)view.getChildAt(1);
+        final int[] des_pic = {R.drawable.des1, R.drawable.des2, R.drawable.des3, R.drawable.des4};
+        TextView text = (TextView) view.getChildAt(0);
+        ImageView img = (ImageView) view.getChildAt(1);
 
         view.setTag("" + position);
         final Item item = getItem(position);
@@ -70,17 +74,17 @@ public class SimpleAdapter extends ArrayAdapter<Item> implements PinnedSectionLi
             view.setBackgroundColor(Color.argb(255, 77, 188, 203));
             text.setTextColor(Color.WHITE);
 
-        }else{
-            img.setBackgroundResource(des_pic[position%4]);
+        } else {
+            img.setBackgroundResource(des_pic[position % 4]);
             img.setVisibility(View.VISIBLE);
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), SpotDetailActivity.class);
                     Bundle spot = new Bundle();
-                    spot.putInt("spottype",item.type);
-                    spot.putString("spotname",item.text);
-                    intent.putExtra("spot",spot);
+                    spot.putInt("spotType", item.type);
+                    spot.putString("cityName", item.text);
+                    intent.putExtra("spot", spot);
                     getContext().startActivity(intent);
 
                 }
@@ -90,11 +94,13 @@ public class SimpleAdapter extends ArrayAdapter<Item> implements PinnedSectionLi
         return view;
     }
 
-    @Override public int getViewTypeCount() {
+    @Override
+    public int getViewTypeCount() {
         return 2;
     }
 
-    @Override public int getItemViewType(int position) {
+    @Override
+    public int getItemViewType(int position) {
         return getItem(position).type;
     }
 

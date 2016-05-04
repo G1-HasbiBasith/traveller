@@ -30,6 +30,9 @@ public class Constants {
 
     public static final String qunar_travelDiary ="http://apis.baidu.com/qunartravel/travellist/travellist?query=“”&page=1";
 
+    public static String DestinationSpot ="http://restapi.amap.com/v3/place/text?key=76df139d624320d1ecd17aee23322fc3" +
+            "&keywords=景点&types=&city=%s&children=1&offset=6&page=1&extensions=base";
+
     public static final int REQUEST_CODE =1;
 
     public static final int RESULT_PIC = 2;

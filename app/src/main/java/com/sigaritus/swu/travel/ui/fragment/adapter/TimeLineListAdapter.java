@@ -108,7 +108,8 @@ public class TimeLineListAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.post_content.setText(postlist.get(position).getString("content"));
         holder.username.setText(postlist.get(position).getString("username"));
-        holder.create_time.setText(new SimpleDateFormat("yyyy-mm-dd")
+
+        holder.create_time.setText(new SimpleDateFormat("yyyy-MM-dd")
                 .format(postlist.get(position).getDate("createdAt")));
         setImage(mContext, holder.user_avatar,
                 postlist.get(position).getAVFile("avatar").getThumbnailUrl(false, 50, 50));
