@@ -36,7 +36,7 @@ public class MateFragment extends BaseFragment {
     @Bind(R.id.schedule_ptr)
     PtrClassicFrameLayout ptr;
     private TourListAdapter adapter;
-    public static MateFragment newInstance(String param1, String param2) {
+    public static MateFragment newInstance() {
         MateFragment fragment = new MateFragment();
 
         return fragment;

@@ -2,6 +2,7 @@ package com.sigaritus.swu.travel.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.MenuItemCompat;
@@ -16,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVObject;
@@ -32,22 +35,30 @@ import com.sigaritus.swu.travel.ui.fragment.MateFragment;
 import com.sigaritus.swu.travel.ui.fragment.MineFragment;
 import com.sigaritus.swu.travel.ui.fragment.RecommandFragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentTabHost fragmentTabHost;
+
     private ShareActionProvider mShareActionProvider;
-    String[] tabs;
-    private int[] drawables = {R.drawable.tab_explore_btn, R.drawable.tab_mate_btn, R.drawable.tab_add_btn,
-            R.drawable.tab_destination_btn, R.drawable.tab_my_btn};
-    private Class[] fragments = {RecommandFragment.class, MateFragment.class, DiaryFragment.class, DestinationFragment.class, MineFragment.class};
+//    String[] tabs;
+//    private int[] drawables = {R.drawable.tab_explore_btn, R.drawable.tab_mate_btn, R.drawable.tab_add_btn,
+//            R.drawable.tab_destination_btn, R.drawable.tab_my_btn};
+//    private Class[] fragments = {RecommandFragment.class, MateFragment.class, DiaryFragment.class, DestinationFragment.class, MineFragment.class};
+
+    @Bind(R.id.bottom_navigation)
+    AHBottomNavigation bottomNavigation;
+
     public static ActionBar actionBar;
+    private BaseFragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tabs = MainActivity.this.getResources().getStringArray(R.array.tabs);
+        ButterKnife.bind(this);
         setPush();
         initViews();
     }
@@ -78,31 +89,56 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         actionBar = this.getSupportActionBar();
 
-        fragmentTabHost = (FragmentTabHost) findViewById(R.id.tab_host);
-        fragmentTabHost.setup(this, getSupportFragmentManager(), R.id.real_tab_content);
+        AHBottomNavigationItem recommand = new AHBottomNavigationItem(getString(R.string.tab1),R.drawable.recomm);
+        AHBottomNavigationItem mate = new AHBottomNavigationItem(getString(R.string.tab2),R.drawable.mate);
+        AHBottomNavigationItem footer = new AHBottomNavigationItem(getString(R.string.tab3),R.drawable.footer);
+        AHBottomNavigationItem destination = new AHBottomNavigationItem(getString(R.string.tab4),R.drawable.destination);
+        AHBottomNavigationItem mine = new AHBottomNavigationItem(getString(R.string.tab5),R.drawable.mine);
 
-        for (int i = 0; i < tabs.length; i++) {
+        bottomNavigation.addItem(recommand);
+        bottomNavigation.addItem(mate);
+        bottomNavigation.addItem(footer);
+        bottomNavigation.addItem(destination);
+        bottomNavigation.addItem(mine);
 
-            fragmentTabHost.addTab(fragmentTabHost.newTabSpec(tabs[i]).setIndicator(getTabview(i)),
-                    fragments[i], null);
-        }
+        bottomNavigation.setCurrentItem(0);
+        bottomNavigation.setForceTitlesDisplay(true);
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.fragment_container,RecommandFragment.newInstance()).commit();
+
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position, boolean wasSelected) {
+
+                switch (position){
+                    case 0:
+                        replaceFragment(R.id.fragment_container,RecommandFragment.newInstance());
+                        break;
+                    case 1:
+                        replaceFragment(R.id.fragment_container,MateFragment.newInstance());
+                        break;
+                    case 2:
+                        replaceFragment(R.id.fragment_container, DiaryFragment.newInstance());
+                        break;
+                    case 3:
+                        replaceFragment(R.id.fragment_container,DestinationFragment.newInstance());
+                        break;
+                    case 4:
+                        replaceFragment(R.id.fragment_container, MineFragment.newInstance());
+                        break;
+                }
+            }
+        });
 
 
     }
 
-    private View getTabview(int index) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.tab_item_view, null);
-        ImageView imageView = (ImageView) view.findViewById(R.id.tabimageview);
-
-        imageView.setBackgroundResource(drawables[index]);
-
-        return view;
-    }
 
     public void replaceFragment(int containerId, BaseFragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(containerId, fragment).commit();
+        fragmentManager.beginTransaction()
+                .replace(containerId, fragment).commit();
 
     }
 
@@ -153,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

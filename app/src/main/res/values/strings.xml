@@ -13,6 +13,12 @@
         <item>发文</item>
         <item>我的</item>
     </string-array>
+    <string name="tab1">推荐</string>
+    <string name="tab2">旅伴</string>
+    <string name="tab3">足迹</string>
+    <string name="tab4">目的地</string>
+    <string name="tab5">我的</string>
+
     <string name="title_activity_spot_detail">详情</string>
     <string name="title_activity_login">登录</string>
 
