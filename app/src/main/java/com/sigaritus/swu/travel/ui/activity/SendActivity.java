@@ -34,8 +34,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
-import com.miao.freesizedraggablelayout.DetailView;
-import com.miao.freesizedraggablelayout.FreeSizeDraggableLayout;
+
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.constants.Constants;
 import com.sigaritus.swu.travel.dataprovider.UploadLatch;

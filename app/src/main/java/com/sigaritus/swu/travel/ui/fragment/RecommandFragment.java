@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -43,6 +49,7 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
     private RecyclerView diarylist;
     private List<Diary> datalist;
     private DiaryListAdapter adapter;
+    private RecyclerViewHeader header;
 
     // TODO: Rename and change types and number of parameters
     public static RecommandFragment newInstance() {
@@ -68,13 +75,16 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
 
         View view = inflater.inflate(R.layout.fragment_recommand, container, false);
 
-        mSlider = (SliderLayout)view.findViewById(R.id.slider);
+        mSlider = (SliderLayout) view.findViewById(R.id.slider);
         diarylist = (RecyclerView) view.findViewById(R.id.travel_diary);
+        header = (RecyclerViewHeader) view.findViewById(R.id.recon_header);
 
-        diarylist.setLayoutManager(new FullyLinearLayoutManager(getContext()));
+        diarylist.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        executeRequest(new JsonObjectRequest(Request.Method.GET, Constants.qunar_travelDiary,null,
-                responseListener(),errorListener()) {
+        header.attachTo(diarylist);
+
+        executeRequest(new JsonObjectRequest(Request.Method.GET, Constants.qunar_travelDiary, null,
+                responseListener(), errorListener()) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -85,17 +95,13 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
         });
 
 
-
         initializeSlider(mSlider);
         return view;
     }
 
 
-
-
-
-    protected Response.Listener<JSONObject> responseListener(){
-        return  new Response.Listener<JSONObject>() {
+    protected Response.Listener<JSONObject> responseListener() {
+        return new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -108,7 +114,7 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
                     datalist = new ArrayList<>();
                     datalist = gson.fromJson(results.toString(), new TypeToken<List<Diary>>() {
                     }.getType());
-                    adapter = new DiaryListAdapter(getActivity(),datalist);
+                    adapter = new DiaryListAdapter(getActivity(), datalist);
                     diarylist.setAdapter(adapter);
 
 
@@ -120,7 +126,7 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
         };
     }
 
-    protected Response.ErrorListener errorListener(){
+    protected Response.ErrorListener errorListener() {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -130,30 +136,30 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
     }
 
 
+    private void initializeSlider(final SliderLayout mSlider) {
 
+        AVQuery<AVObject> bannerQuery = new AVQuery<>("Recommend");
+        bannerQuery.findInBackground(new FindCallback<AVObject>() {
+            @Override
+            public void done(List<AVObject> list, AVException e) {
+                for (AVObject banner : list) {
+                    TextSliderView textSliderView = new TextSliderView(getActivity());
+                    // initialize a SliderLayout
+                    textSliderView
+                            .description(banner.getString("title"))
+                            .image(banner.getAVFile("cover").getThumbnailUrl(false, 300, 300))
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(RecommandFragment.this);
 
-    private void initializeSlider(SliderLayout mSlider) {
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("slider1",R.drawable.slider1);
-        file_maps.put("slider2",R.drawable.slider2);
-        file_maps.put("slider3",R.drawable.slider3);
-        file_maps.put("slider4", R.drawable.slider4);
-        for(String name : file_maps.keySet()){
-            TextSliderView textSliderView = new TextSliderView(getActivity());
-            // initialize a SliderLayout
-            textSliderView
-                    .description(name)
-                    .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
+                    //add your extra information
+                    textSliderView.bundle(new Bundle());
+                    textSliderView.getBundle()
+                            .putString("extra", banner.getString("title"));
 
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra",name);
-
-            mSlider.addSlider(textSliderView);
-        }
+                    mSlider.addSlider(textSliderView);
+                }
+            }
+        });
 
         mSlider.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -161,7 +167,11 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
         mSlider.setDuration(4000);
         mSlider.addOnPageChangeListener(this);
 
+
+
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
 

@@ -65,9 +65,6 @@ public class MineFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
 
-        AppCompatActivity ac = (AppCompatActivity) getActivity();
-        ac.getSupportActionBar().hide();
-
         mSettingView = (SettingView) view.findViewById(R.id.main_setting_view);
 
         username = (TextView) view.findViewById(R.id.username);

@@ -47,7 +47,6 @@ public class DiaryFragment extends  BaseFragment{
     private TimeLineListAdapter mAdapter;
 
     private List<List<ImageInfo>> imageinfos = new ArrayList<List<ImageInfo>>();
-    private SwipeRefreshLayout refreshLayout;
 
     private AVLoadingIndicatorView loading;
 

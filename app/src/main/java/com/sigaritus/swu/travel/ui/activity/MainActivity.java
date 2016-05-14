@@ -43,10 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ShareActionProvider mShareActionProvider;
-//    String[] tabs;
-//    private int[] drawables = {R.drawable.tab_explore_btn, R.drawable.tab_mate_btn, R.drawable.tab_add_btn,
-//            R.drawable.tab_destination_btn, R.drawable.tab_my_btn};
-//    private Class[] fragments = {RecommandFragment.class, MateFragment.class, DiaryFragment.class, DestinationFragment.class, MineFragment.class};
 
     @Bind(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigation;

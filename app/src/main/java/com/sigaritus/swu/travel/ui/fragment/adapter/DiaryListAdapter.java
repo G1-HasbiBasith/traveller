@@ -46,7 +46,7 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.Diar
         Picasso.with(mContext).load(diaryList.get(position).getHeadImage())
                 .placeholder(R.drawable.ic_default_image).into(holder.headImage);
         Picasso.with(mContext).load(diaryList.get(position).getUserHeadImg())
-                .placeholder(R.drawable.ic_default_image).into(holder.usrheadimg);
+                .placeholder(R.drawable.ic_default_image).into(holder.userheadimg);
 
     }
 
@@ -58,7 +58,7 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.Diar
     class DiaryHolder extends RecyclerView.ViewHolder {
         ImageView headImage;
         TextView title;
-        CircleImageView usrheadimg;
+        CircleImageView userheadimg;
         TextView username;
         TextView time;
 
@@ -66,8 +66,8 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.Diar
             super(itemView);
             headImage = (ImageView) itemView.findViewById(R.id.headimg);
             title = (TextView) itemView.findViewById(R.id.diary_title);
-            usrheadimg = (CircleImageView) itemView.findViewById(R.id.usrheadimg);
-            username = (TextView) itemView.findViewById(R.id.username);
+            userheadimg = (CircleImageView) itemView.findViewById(R.id.userheadimg);
+            username = (TextView) itemView.findViewById(R.id.r_username);
             time = (TextView) itemView.findViewById(R.id.time);
         }
     }
