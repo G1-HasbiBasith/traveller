@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVObject;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.entity.Diary;
 import com.squareup.picasso.Picasso;
@@ -19,13 +20,31 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by Administrator on 2016/4/7.
  */
-public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.DiaryHolder> {
+public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.DiaryHolder> implements View.OnClickListener{
 
     private Context mContext;
     private List<Diary> diaryList;
 
     public DiaryListAdapter(Context mContext) {
         this.mContext = mContext;
+    }
+    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
+
+
+
+    public static interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view , String data);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (mOnItemClickListener!=null){
+            mOnItemClickListener.onItemClick(view, (String)view.getTag());
+        }
+    }
+
+    public void setmOnItemClickListener(OnRecyclerViewItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
     }
 
     public DiaryListAdapter(Context mContext, List<Diary> diaryList) {
@@ -35,7 +54,10 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.Diar
 
     @Override
     public DiaryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DiaryHolder(LayoutInflater.from(mContext).inflate(R.layout.recom_item, parent, false));
+        View view = LayoutInflater.from(mContext).inflate(R.layout.recom_item, parent, false);
+        view.setOnClickListener(this);
+        DiaryHolder holder = new DiaryHolder(view);
+        return holder;
     }
 
     @Override
@@ -48,6 +70,7 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.Diar
         Picasso.with(mContext).load(diaryList.get(position).getUserHeadImg())
                 .placeholder(R.drawable.ic_default_image).into(holder.userheadimg);
 
+        holder.itemView.setTag(diaryList.get(position).getBookUrl());
     }
 
     @Override

@@ -21,5 +21,3 @@
             android:layout_height="match_parent" />
     </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
     </FrameLayout>
-
-

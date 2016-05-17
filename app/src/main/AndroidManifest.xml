@@ -55,8 +55,7 @@
         <activity
             android:name=".ui.activity.SpotDetailActivity"
             android:label="@string/title_activity_spot_detail"
-            android:parentActivityName=".ui.activity.MainActivity"
-             >
+            android:parentActivityName=".ui.activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.MainActivity" />
@@ -154,9 +153,9 @@
         </activity>
         <activity android:name=".ui.activity.AddScheduleActivity" >
         </activity>
-
-
         <activity android:name=".ui.activity.TourDetailActivity" >
+        </activity>
+        <activity android:name=".ui.activity.DiaryDetailActivity" >
         </activity>
     </application>
 

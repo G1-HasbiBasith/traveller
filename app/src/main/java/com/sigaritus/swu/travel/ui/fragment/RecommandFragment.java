@@ -1,6 +1,7 @@
 package com.sigaritus.swu.travel.ui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sigaritus.swu.travel.R;
 import com.sigaritus.swu.travel.constants.Constants;
 import com.sigaritus.swu.travel.entity.Diary;
+import com.sigaritus.swu.travel.ui.activity.DiaryDetailActivity;
 import com.sigaritus.swu.travel.ui.fragment.adapter.DiaryListAdapter;
 import com.sigaritus.swu.travel.ui.fragment.adapter.FullyLinearLayoutManager;
 import com.sigaritus.swu.travel.util.ToastUtils;
@@ -83,6 +86,8 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
 
         header.attachTo(diarylist);
 
+
+
         executeRequest(new JsonObjectRequest(Request.Method.GET, Constants.qunar_travelDiary, null,
                 responseListener(), errorListener()) {
             @Override
@@ -115,6 +120,17 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
                     datalist = gson.fromJson(results.toString(), new TypeToken<List<Diary>>() {
                     }.getType());
                     adapter = new DiaryListAdapter(getActivity(), datalist);
+
+                    adapter.setmOnItemClickListener(new DiaryListAdapter.OnRecyclerViewItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, String data) {
+                            Intent intent = new Intent(getActivity(), DiaryDetailActivity.class);
+                            intent.putExtra("bookUrl", data);
+                            getActivity().startActivity(intent);
+
+                        }
+                    });
+
                     diarylist.setAdapter(adapter);
 
 
@@ -142,22 +158,27 @@ public class RecommandFragment extends BaseFragment implements BaseSliderView.On
         bannerQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
-                for (AVObject banner : list) {
-                    TextSliderView textSliderView = new TextSliderView(getActivity());
-                    // initialize a SliderLayout
-                    textSliderView
-                            .description(banner.getString("title"))
-                            .image(banner.getAVFile("cover").getThumbnailUrl(false, 300, 300))
-                            .setScaleType(BaseSliderView.ScaleType.Fit)
-                            .setOnSliderClickListener(RecommandFragment.this);
+                if (list!=null){
+                    for (AVObject banner : list) {
+                        TextSliderView textSliderView = new TextSliderView(getActivity());
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(banner.getString("title"))
+                                .image(banner.getAVFile("cover").getThumbnailUrl(false, 300, 300))
+                                .setScaleType(BaseSliderView.ScaleType.Fit)
+                                .setOnSliderClickListener(RecommandFragment.this);
 
-                    //add your extra information
-                    textSliderView.bundle(new Bundle());
-                    textSliderView.getBundle()
-                            .putString("extra", banner.getString("title"));
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle()
+                                .putString("extra", banner.getString("title"));
 
-                    mSlider.addSlider(textSliderView);
+                        mSlider.addSlider(textSliderView);
+
+
+                    }
                 }
+
             }
         });
 
